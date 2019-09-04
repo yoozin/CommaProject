@@ -7,21 +7,24 @@
     <select id="selectAll" parameterType="int" resultType="comment.vo.CommentVO">
   		select * from comment where border_no = #{borderNo}
   	</select>
-  	<select id="getComment" parameterType="int" resultType="comment.vo.CommentVO">
+  	<select id="selectOne" parameterType="int" resultType="comment.vo.CommentVO">
   		select * from comment where comment_no = #{commentNo}
   	</select>
-  	<select id="getCmtCount" parameterType="int" resultType="int">
+  	<select id="selectCount" parameterType="int" resultType="int">
   		select count(*) from comment where border_no=#{borderNo}
+  	</select>
+  	<select id="selectLastOne">
+  		select * from comment order by comment_no desc limit 1
   	</select>
   	<insert id="insertCmt" parameterType="comment.vo.CommentVO">
   		insert into comment(comment_writer, comment_text, border_no)
   		values (#{commentWriter},#{commentText},#{borderNo})
   	</insert>
-  	<update id="updateCmt" parameterType="comment.vo.CommentVO">
+  	<update id="updateComment" parameterType="comment.vo.CommentVO">
   		update comment set comment_writer=#{commentWriter}, comment_text=#{commentText} 
   		where comment_no=#{commentNo}
   	</update>
-  	<delete id="deleteCmt" parameterType="int">
+  	<delete id="deleteComment" parameterType="int">
   		delete from comment where comment_no=#{commentNo}
   	</delete>
     </mapper>
