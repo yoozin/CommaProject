@@ -1,11 +1,9 @@
-package comment.dao;
+package comment.service;
 
 import java.util.List;
 
 import comment.vo.CommentVO;
 
-public interface CommentDAO {
-	
-	//댓글 조회
+public interface CommentService {
 	public List<CommentVO> selectAll(int borderNo) throws Exception;
 }
