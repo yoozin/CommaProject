@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="mapper.commentMapper">
+    <!-- 댓글 전체 조회 -->
+    <select id="selectAll" parameterType="int" resultType="comment.vo.CommentVO">
+  		select * from comment where border_no = #{borderNo}
+  	</select>
+  	<select id="selectOne" parameterType="int" resultType="comment.vo.CommentVO">
+  		select * from comment where comment_no = #{commentNo}
+  	</select>
+  	<select id="selectCount" parameterType="int" resultType="int">
+  		select count(*) from comment where border_no=#{borderNo}
+  	</select>
+  	<select id="selectLastOne">
+  		select * from comment order by comment_no desc limit 1
+  	</select>
+  	<insert id="insertCmt" parameterType="comment.vo.CommentVO">
+  		insert into comment(comment_writer, comment_text, border_no)
+  		values (#{commentWriter},#{commentText},#{borderNo})
+  	</insert>
+  	<update id="updateComment" parameterType="comment.vo.CommentVO">
+  		update comment set comment_writer=#{commentWriter}, comment_text=#{commentText} 
+  		where comment_no=#{commentNo}
+  	</update>
+  	<delete id="deleteComment" parameterType="int">
+  		delete from comment where comment_no=#{commentNo}
+  	</delete>
+    </mapper>
