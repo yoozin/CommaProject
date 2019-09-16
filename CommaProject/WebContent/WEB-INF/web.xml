@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
 	
+	
+	<filter>
+
+		<filter-name>encodingFilter</filter-name>
+
+		<filter-class>
+
+			org.springframework.web.filter.CharacterEncodingFilter
+
+		</filter-class>
+
+		<init-param>
+
+			<param-name>encoding</param-name>
+
+			<param-value>UTF-8</param-value>
+
+		</init-param>
+
+		<init-param>
+
+			<param-name>forceEncoding</param-name>
+
+			<param-value>true</param-value>
+
+		</init-param>
+
+	</filter>
+
+	<filter-mapping>
+
+		<filter-name>encodingFilter</filter-name>
+
+		<url-pattern>/*</url-pattern>
+
+	</filter-mapping>
+	
   <!-- needed for ContextLoaderListener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -21,6 +58,18 @@
 			<param-value>classpath:config/root-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		<!-- 파일 업로드 형식을 지원하는 web.xml설정 -->
+		<multipart-config>
+		<!-- 실제 시스템 안 쪽 위치 -->
+		<location></location>
+		<!-- 파일당 사이즈 바이트 -->
+		<max-file-size>10000000</max-file-size>
+		<!-- 요청당 파일 사이즈 -->
+		<max-request-size>40000000</max-request-size>
+		<file-size-threshold>10000000</file-size-threshold>
+		</multipart-config>
+		
 	</servlet>
 
 	<!-- Map all requests to the DispatcherServlet for handling -->

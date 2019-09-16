@@ -9,8 +9,7 @@
   	</settings>
   
   	<typeAliases>
-  		<typeAlias type="member.vo.MemberVO" alias ="member" />
-  		<typeAlias type="board.vo."
+  		<typeAlias type="board.vo.BoardVO" alias="board" />
   	</typeAliases>
   
   </configuration>
