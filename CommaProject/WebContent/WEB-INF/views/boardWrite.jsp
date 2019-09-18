@@ -24,36 +24,10 @@ $(document).ready(function() {
 	        minHeight: 370,
 	        maxHeight: null,
 	        focus: true, 
-	        lang : 'ko-KR'
-	       
-	        callbacks: {
-	            onImageUpload: function(files, editor, welEditable) {
-	             for (var i = files.length - 1; i >= 0; i--) {
-	             sendFile(files[i], this);
-	             }
-	            }
-	        }
-	        
+	        lang : 'ko-KR',  
 	  });
-	});
-	
-	function sendFile(file, el) {
-    var form_data = new FormData();
-    form_data.append('file', file);
-    $.ajax({
-      data: form_data,
-      type: "POST",
-      url: '/image',
-      cache: false,
-      contentType: false,
-      enctype: 'multipart/form-data',
-      processData: false,
-      success: function(url) {
-        $(el).summernote('editor.insertImage', url);
-        $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
-      }
-    });
-  }
+}); 
+
 </script>
 
 </head>
@@ -102,11 +76,3 @@ function goWrite(frm) {
 </script>
 
 </html>
-<%-- <form action="board/write" method="post"> 
-	<input type="text" name="title" placeholder="title"><br>
-	<input type="date" name="travelDate"><br>
-	<input type="text" name="writer" placeholder="writer"><br>
-	<input type="text" name="content" placeholder="please write your content"><br>
-	<input type="file" name="uploadFile" multiple>
-	<input type="submit" value="upload">
-</form> --%>

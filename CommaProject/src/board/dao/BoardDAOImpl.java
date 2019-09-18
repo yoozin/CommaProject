@@ -55,5 +55,21 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		return boardMapper.selectBoardLastOne();
 	}
+	
+	@Override
+	public void updateReplyCount(int boardId, int amount) throws Exception{
+		
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

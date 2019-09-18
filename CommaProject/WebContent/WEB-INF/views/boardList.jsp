@@ -54,7 +54,7 @@ function fn_write(){
     
     var form = document.getElementById("boardForm");
     
-    form.action = "<c:url value='/boardWrite.jsp'/>";
+    form.action = "<c:url value='/board'/>";
     form.submit();
     
 }

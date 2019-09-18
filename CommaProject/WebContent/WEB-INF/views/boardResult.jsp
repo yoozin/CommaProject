@@ -14,15 +14,20 @@
 </head>
 <body>
 <form id="boardForm" role="form" method="post" autocomplete="off"> 
-	No. <input type="text" id="boardId" name="boardId" value="${board.boardId}" readonly="readonly"><br>
-	board Title : <input type="text" id="title"  name="title" value="${board.title}" readonly="readonly"><br>
-	travel Date : <input type="date" id="travelDate"  name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>" readonly="readonly"><br>
-	writer : <input type="text" id="writer" name="writer" value="${board.writer}" readonly="readonly"><br>
-	content : <input type="text" id="content" name="content" value="${board.content}" readonly="readonly"><br> 
-	write Date : <input type="date" id="wDate" name="wDate" value="<fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd"/>"  readonly="readonly" ><br>
-	update Date : <input type="date" id="uDate" name="uDate" value="<fmt:formatDate value="${board.uDate}" pattern="yyyy-MM-dd"/>"  readonly="readonly" ><br>
-
-
+	No. ${board.boardId}
+	board Title : ${board.title}
+	travel Date : <fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>
+	writer : ${board.writer}<br>
+	${board.content} 
+	write Date : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd"/>
+	update Date :<fmt:formatDate value="${board.uDate}" pattern="yyyy-MM-dd"/>
+		<input type="hidden" name="boardId" value="${board.boardId}"/><br>
+		<input type="hidden" name="writer" value="${board.writer}"/><br>
+		<input type="hidden" name="title"  value="${board.title}"/>
+		<input type="hidden" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>"/><br>
+		<input type="hidden" name="content" value="${board.content}"/>
+		<input type="hidden" name="wDate" value="<fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss.SSS"/>"/>
+		<input type="hidden" name="uDate" value="<fmt:formatDate value="${board.uDate}" pattern="yyyy-MM-dd HH:mm:ss.SSS"/>"/>
 </form> 
 
 <p>
