@@ -13,4 +13,7 @@ public interface BoardService {
 	public BoardVO updateBoard(BoardVO board);
 	public BoardVO selectOneBoard(int boardId);
 	public List<BoardVO> selectBoardList();
+	public BoardVO read(int boardId) throws Exception;
+	public int selectBoardListCnt();
+
 }

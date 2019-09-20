@@ -1,10 +1,13 @@
 package board.controller;
 
+import java.awt.print.Pageable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import board.paging.Pagination;
 import board.service.BoardService;
 import board.vo.BoardVO;
 
@@ -45,15 +49,16 @@ public class BoardController {
 	@RequestMapping("board/write")
 	public String write(BoardVO board, Model model ) {
 		board.setReplyCount(0);
+
 		BoardVO createboard = boardService.createBoard(board);
 		model.addAttribute("board", createboard);
 		return "/WEB-INF/views/boardResult.jsp";
 	}
 	
 	@RequestMapping("board/viewOne")
-	public String boardViewOne(Model model , BoardVO board) {
+	public String boardViewOne(Model model , BoardVO board) throws Exception {
 		board.setReplyCount(0);
-		BoardVO boardOne = boardService.selectOneBoard(board.getBoardId());
+		BoardVO boardOne = boardService.read(board.getBoardId());
 		model.addAttribute("board", boardOne);
 		return "/WEB-INF/views/boardResult.jsp";
 	}
@@ -66,6 +71,10 @@ public class BoardController {
 	
 	@RequestMapping("board/modifyUpload")
 	public String boardEditor(Model model, BoardVO board) {
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date time = new Date();
+		String updatedTime = date.format(time);
+		board.setuDate(updatedTime);
 		BoardVO updatedBoard = boardService.updateBoard(board);	
 		System.out.println(board);
 		return "forward:/board/viewOne";
@@ -80,12 +89,38 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	 @RequestMapping("board/list")
-	    public String boardList(Model model) throws Exception{
+//	 @RequestMapping("board/list")
+//	    public String boardList(Model model, ) throws Exception{
+//	        List<BoardVO> list = boardService.selectBoardList();
+//	        model.addAttribute("list", list);
+//	        
+//	        return "/WEB-INF/views/boardList.jsp";
+//	    }
+	 
+	 
+	 	@RequestMapping("board/list")
+	    public String boardList(@ModelAttribute("boardVO") BoardVO boardVO,
+	            @RequestParam(defaultValue="1") int curPage,
+	            HttpServletRequest request,
+	            Model model) throws Exception{
+	 
+	        // 전체리스트 개수
+	        int listCnt = boardService.selectBoardListCnt();
+	        Pagination pagination = new Pagination(listCnt, curPage);
+	        
+	        boardVO.setStartIndex(pagination.getStartIndex());
+	        boardVO.setCntPerPage(pagination.getPageSize());
+	        // 전체리스트 출력
 	        List<BoardVO> list = boardService.selectBoardList();
+	                
 	        model.addAttribute("list", list);
+	        model.addAttribute("listCnt", listCnt);
+	   //     model.addAttribute("loginVO", loginVO);
+	        
+	        model.addAttribute("pagination", pagination);
 	        
 	        return "/WEB-INF/views/boardList.jsp";
 	    }
+	    
 	
 }

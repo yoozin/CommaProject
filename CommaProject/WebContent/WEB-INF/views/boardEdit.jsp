@@ -63,7 +63,7 @@ $(document).ready(function() {
 		<input type="text" name="title" style="width: 40%;" value="${board.title}"/>
 		<input type="date" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>" ><br>
 		<br><br> 
-
+		최초작성일 : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/><br>
 		<textarea id="summernote" name="content"> ${board.content}</textarea>
 		<input id="subBtn" type="button" value="submit" style="float: right;" onclick="goModify()"/>
 

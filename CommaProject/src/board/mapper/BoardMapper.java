@@ -10,10 +10,11 @@ public interface BoardMapper {
 	public void insert(BoardVO board);
 	public void update(BoardVO board);
 	public void updateReplyCount(int boardId);
+	public void updateViewCount(int boardId);
 	public void delete(BoardVO board);
 	public BoardVO selectOne(int boardId);
 	public List<BoardVO> selectAll();
 	public BoardVO selectBoardLastOne();
-	
+	public int selectBoardListCnt();
 
 }

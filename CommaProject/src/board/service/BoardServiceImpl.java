@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import board.dao.BoardDAO;
 import board.vo.BoardVO;
@@ -41,6 +43,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO selectOneBoard(int boardId) {
 		return boardDao.selectOne(boardId);
+	}
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Override
+	public BoardVO read(int boardId) throws Exception {
+		boardDao.updateViewCount(boardId);
+		return boardDao.selectOne(boardId);
+	}
+	
+	@Override
+	public int selectBoardListCnt() {
+		return boardDao.selectBoardListCnt();
 	}
 	
 }

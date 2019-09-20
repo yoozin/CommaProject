@@ -14,20 +14,24 @@
 </head>
 <body>
 <form id="boardForm" role="form" method="post" autocomplete="off"> 
+
+
 	No. ${board.boardId}
 	board Title : ${board.title}
 	travel Date : <fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>
 	writer : ${board.writer}<br>
 	${board.content} 
-	write Date : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd"/>
-	update Date :<fmt:formatDate value="${board.uDate}" pattern="yyyy-MM-dd"/>
+	write Date : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+	update Date :${board.uDate}
+	view : ${board.viewCount}
 		<input type="hidden" name="boardId" value="${board.boardId}"/><br>
 		<input type="hidden" name="writer" value="${board.writer}"/><br>
 		<input type="hidden" name="title"  value="${board.title}"/>
 		<input type="hidden" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>"/><br>
 		<input type="hidden" name="content" value="${board.content}"/>
-		<input type="hidden" name="wDate" value="<fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss.SSS"/>"/>
-		<input type="hidden" name="uDate" value="<fmt:formatDate value="${board.uDate}" pattern="yyyy-MM-dd HH:mm:ss.SSS"/>"/>
+		<input type="hidden" name="viewCount" value="${board.viewCount}"/>
+		<input type="hidden" name="wDate" value="<fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+		<input type="hidden" name="uDate" value="${board.uDate}"/>
 </form> 
 
 <p>

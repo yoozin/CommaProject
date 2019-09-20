@@ -1,9 +1,11 @@
 package board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import board.mapper.BoardMapper;
 import board.vo.BoardVO;
@@ -61,10 +63,15 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
+	@Override
+	public void updateViewCount(int boardId) throws Exception{
+		boardMapper.updateViewCount(boardId);
+	}
 	
-	
-	
-	
+	@Override
+	public int selectBoardListCnt(){
+		return boardMapper.selectBoardListCnt();
+	}
 	
 	
 	

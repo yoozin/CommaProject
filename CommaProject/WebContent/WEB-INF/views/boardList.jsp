@@ -20,7 +20,8 @@
         <table>
             <thead>
                 <tr>
-                    <th>no.</th>
+                	<th>no.</th>
+                    <th>boardId</th>
                     <th>title</th>
                     <th>writer</th>
                     <th>travelDate</th>
@@ -30,8 +31,10 @@
                 </tr>
             </thead>
             <tbody>
+           		<c:set var="i" value="0"/>
                 <c:forEach var="result" items="${list}" varStatus="status">
-                    <tr>
+                    <tr>              
+                  		<td><c:out value="${i}"/></td>
                         <td><c:out value="${result.boardId }"/></td>
                         <td><a href='#' onClick='fn_view(${result.boardId})'><c:out value="${result.title }"/></a></td>
                         <td><c:out value="${result.writer }"/></td>
@@ -39,17 +42,27 @@
                         <td><c:out value="${result.wDate }"/></td>
                         <td><c:out value="${result.uDate }"/></td>
                         <td><c:out value="${result.replyCount}"/></td>
+                        <td><c:out value="${result.viewCount}"/></td>
                     </tr>
-                </c:forEach>
+                    </c:forEach>
+               
             </tbody>
         </table>
+       
+        
         <input type="button" value="글쓰기" style="float: right;" onclick="location.href='/write'">
         <div>            
             <a href='#' onClick='fn_write()'>write</a>            
         </div>
     </form>
+    
+    
 <script>
+
+
+	
 //글쓰기
+
 function fn_write(){
     
     var form = document.getElementById("boardForm");
