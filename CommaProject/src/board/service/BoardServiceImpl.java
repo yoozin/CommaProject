@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import board.common.Search;
 import board.dao.BoardDAO;
 import board.vo.BoardVO;
 
@@ -35,9 +36,10 @@ public class BoardServiceImpl implements BoardService {
 		return updatedBoard;
 	}
 
+	//¼öÁ¤
 	@Override
-	public List<BoardVO> selectBoardList(){
-		return boardDao.selectAll();
+	public List<BoardVO> selectBoardList(Search search){
+		return boardDao.selectAll(search);
 	}
 
 	@Override
@@ -53,8 +55,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int selectBoardListCnt() {
-		return boardDao.selectBoardListCnt();
+	public int selectBoardListCnt(Search search) throws Exception {
+		return boardDao.selectBoardListCnt(search);
 	}
 	
 }

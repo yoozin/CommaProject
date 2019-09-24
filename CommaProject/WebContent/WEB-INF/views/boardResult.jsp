@@ -14,8 +14,6 @@
 </head>
 <body>
 <form id="boardForm" role="form" method="post" autocomplete="off"> 
-
-
 	No. ${board.boardId}
 	board Title : ${board.title}
 	travel Date : <fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>
@@ -24,14 +22,6 @@
 	write Date : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	update Date :${board.uDate}
 	view : ${board.viewCount}
-		<input type="hidden" name="boardId" value="${board.boardId}"/><br>
-		<input type="hidden" name="writer" value="${board.writer}"/><br>
-		<input type="hidden" name="title"  value="${board.title}"/>
-		<input type="hidden" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>"/><br>
-		<input type="hidden" name="content" value="${board.content}"/>
-		<input type="hidden" name="viewCount" value="${board.viewCount}"/>
-		<input type="hidden" name="wDate" value="<fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
-		<input type="hidden" name="uDate" value="${board.uDate}"/>
 </form> 
 
 <p>
@@ -42,33 +32,26 @@
 
 <script>
 
-// 폼을 변수에 저장
-
-var formObj = $("form[role='form']");
-
 $("#modify_btn").click(function(){
-	 var form = document.getElementById("boardForm");
 	 var url = "<c:url value='/board/modify'/>";
-	 url = url + "?boardId=" + ${board.boardId};    
-	 form.action = url;    
-	 form.submit();
+	 url = url + "?boardId=" +  ${board.boardId};    
+	 location.href= url;
 	
 });
 
 $("#delete_btn").click(function(){
 	if(confirm("are you sure?")==true){
-			formObj.attr("action", "delete");
-			formObj.attr("method", "post");
-			formObj.submit();
+		 var url = "<c:url value='/board/delete'/>";
+		 url = url + "?boardId=" +  ${board.boardId};    
+		 location.href= url;
 	}else{
 		return;
 	}
 }); 
 
 $("#list_btn").click(function(){
-	formObj.attr("action", "list");
-	formObj.attr("method", "post");
-	formObj.submit();
+	 var url = "<c:url value='/board/list'/>";
+	 location.href= url;
 })
 
 </script> 

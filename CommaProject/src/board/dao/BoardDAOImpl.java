@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
+import board.common.Search;
 import board.mapper.BoardMapper;
 import board.vo.BoardVO;
 
@@ -46,10 +47,11 @@ public class BoardDAOImpl implements BoardDAO {
 		return boardMapper.selectOne(boardId);
 	}
 
+	//수정
 	@Override
-	public List<BoardVO> selectAll() {
-		
-		return boardMapper.selectAll();
+	public List<BoardVO> selectAll(Search search) {
+		 
+		return boardMapper.selectAll(search);
 	}
 
 	@Override
@@ -68,9 +70,10 @@ public class BoardDAOImpl implements BoardDAO {
 		boardMapper.updateViewCount(boardId);
 	}
 	
+	//수정
 	@Override
-	public int selectBoardListCnt(){
-		return boardMapper.selectBoardListCnt();
+	public int selectBoardListCnt(Search search) throws Exception{
+		return boardMapper.selectBoardListCnt(search);
 	}
 	
 	

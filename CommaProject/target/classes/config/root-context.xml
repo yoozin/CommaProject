@@ -12,13 +12,20 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:component-scan base-package="board.dao, board.service, board.controller"/>
+	<context:component-scan base-package="member.dao, member.service"/>
+	<context:component-scan base-package="member.controller"/>
+	<context:component-scan base-package="comment.dao,comment.service,comment.controller"/>
+	
+	
 	<context:property-placeholder location = "classpath:config/dbvalue.properties"/>
 	
 	<mvc:annotation-driven/>
 	<mvc:resources mapping="/resources/**" location="/resources/"
     cache-period="31556926"/>
- 
-	
+    
+    <!-- 외부 이미지 경로 매핑! -->
+ 	<mvc:resources mapping="board/img/**" location="file:C:/Comma/upload/"/>
+ 	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
@@ -36,6 +43,10 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:mapper/boardMapper.xml</value>
+				
+				<value>classpath:mapper/memberMapper.xml</value>
+				
+				<value>classpath:mapper/commentMapper.xml</value>
 			</list>
 		</property>
 		<property name = "dataSource" ref="dataSource"/>
@@ -44,6 +55,17 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="board.mapper"/>
 		<property name="annotationClass" value="board.mapper.Mymapper"/>
+	</bean>
+
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name= "basePackage" value="member.mapper"/>
+		<property name="annotationClass" value="member.mapper.MyMapper"/>
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name= "basePackage" value="comment.mapper"/>
+		<property name="annotationClass" value="comment.mapper.MyMapper"/>
 	</bean>
 
 </beans>

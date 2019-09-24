@@ -6,10 +6,14 @@
   <configuration>
   	<settings>
   		<setting name = "mapUnderscoreToCamelCase" value="true"/>
+  		
+  		<setting name="useGeneratedKeys" value="true"/>
   	</settings>
   
   	<typeAliases>
-  		<typeAlias type="board.vo.BoardVO" alias="board" />
+  		<typeAlias type="member.vo.MemberVo" alias ="member" />
+		<typeAlias type="comment.vo.CommentVO" alias="comment" />
+  		<typeAlias type="board.vo.BoardVO" alias="board" />		
   	</typeAliases>
   
   </configuration>

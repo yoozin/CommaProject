@@ -7,25 +7,48 @@
   
   <select id="selectAll" resultType="board">
    select * from comma.board 
+   
+   <!-- search -->
+   <trim prefix="WHERE" prefixOverrides="AND|OR">
+   	<if test="searchType=='title' and keyword != null and keyword != ''">
+   		AND title like CONCAT('%',#{keyword},'%')
+   	</if>
+   	<if test="searchType=='content' and keyword != null and keyword != ''">
+   		AND content like CONCAT('%',#{keyword},'%')
+   	</if>
+   	<if test="searchType=='writer' and keyword != null and keyword != ''">
+   		AND writer like CONCAT('%',#{keyword},'%')
+   	</if>
+   </trim>
+   <!-- 페이징 -->
+   	LIMIT #{startList}, #{listSize}
+   <!-- 페이징 -->
+   <!-- search -->
+   
   </select>
 
   <select id="selectOne" parameterType="int" resultType="board">
    select * from comma.board  where board_id=#{boardId} 
   </select>
   
-  
-    
+ 
   <insert id="insert" parameterType="board">
   	insert into comma.board(title, writer, content, travel_date, reply_count) values ( #{title}, #{writer}, #{content}, #{travelDate}, #{replyCount})
   </insert>
   
   <update id="update" parameterType="board">
-  	update comma.board  set title = #{title}, content= #{content}, reply_count= #{replyCount}, travel_Date=#{travelDate} where board_id=#{boardId} 
+  	update comma.board  set title = #{title}, content= #{content}, reply_count= #{replyCount}, travel_Date=#{travelDate}, uDate=#{uDate} where board_id=#{boardId} 
   </update>
   
   <update id="updateReplyCount" parameterType="int">
   	update comma.board set reply_count = #{replyCount} where board_id=#{boardId} 
   </update>
+  
+  <update id="updateViewCount">
+  	update comma.board set view_count = view_count+1 
+  	where board_id=#{boardId} 
+  </update>
+  
   
   <delete id="delete" parameterType="board">
   	delete from comma.board  where board_id=#{boardId} 
@@ -34,5 +57,31 @@
   <select id="selectBoardLastOne" resultType="board">
 		select * from comma.board  order by board_id desc limit 1  
   </select>
+  
+  <!-- BoardListCnt -->
+<select id="selectBoardListCnt" resultType="int">
+     select count(*) as listCnt from comma.board
+  
+  <!-- search -->
+     <trim prefix="WHERE" prefixOverrides="AND|OR">
+        <if test="keyword != null and keyword != ''">
+           <if test="searchType=='title'">
+              AND title like CONCAT('%',#{keyword},'%')
+           </if>
+           <if test="searchType=='content'">
+              AND content like CONCAT('%',#{keyword},'%')
+           </if>
+           <if test="searchType=='writer'">
+              AND writer like CONCAT('%',#{keyword},'%')
+           </if>
+           
+        </if>
+     </trim>
+     <!-- search -->
+     
+  </select>      
+  <!-- BoardListCnt -->
+  
+  
   		 
   </mapper>

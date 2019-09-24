@@ -79,7 +79,7 @@ function goModify(){
     url = url + "?boardId=" + ${board.boardId};
     
     form.action = url;    
-   
+   	
 	var title = "${board.title}";
 	var writer = "${board.writer}";
 	var content = "${board.content}";

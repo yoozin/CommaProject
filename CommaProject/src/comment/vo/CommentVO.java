@@ -1,11 +1,12 @@
 package comment.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommentVO {
 	
 	private int commentNo;
-	private int borderNo;
+	private int boardId;
 	private String commentText;
 	private String commentWriter;
 	private Date commentRdate;
@@ -21,12 +22,12 @@ public class CommentVO {
 		this.commentNo = commentNo;
 	}
 
-	public int getBorderNo() {
-		return borderNo;
+	public int getBoardId() {
+		return boardId;
 	}
 
-	public void setBorderNo(int borderNo) {
-		this.borderNo = borderNo;
+	public void setBoardId(int borderNo) {
+		this.boardId = borderNo;
 	}
 
 	public String getCommentText() {
@@ -45,8 +46,12 @@ public class CommentVO {
 		this.commentWriter = commentWriter;
 	}
 
-	public Date getCommentRdate() {
-		return commentRdate;
+	public String getCommentRdate() {
+		SimpleDateFormat sdf;
+		sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String printdate;
+		printdate = sdf.format(commentRdate);
+		return printdate;
 	}
 
 	public void setCommentRdate(Date commentRdate) {
@@ -61,11 +66,11 @@ public class CommentVO {
 		this.commentUdate = commentUdate;
 	}
 
-	public CommentVO(int commentNo, int borderNo, String commentText, String commentWriter, Date commentRdate,
+	public CommentVO(int commentNo, int boardId, String commentText, String commentWriter, Date commentRdate,
 			Date commentUdate) {
 		super();
 		this.commentNo = commentNo;
-		this.borderNo = borderNo;
+		this.boardId = boardId;
 		this.commentText = commentText;
 		this.commentWriter = commentWriter;
 		this.commentRdate = commentRdate;
@@ -74,7 +79,7 @@ public class CommentVO {
 
 	@Override
 	public String toString() {
-		return "CommentVO [commentNo=" + commentNo + ", borderNo=" + borderNo + ", commentText=" + commentText
+		return "CommentVO [commentNo=" + commentNo + ", boardId=" + boardId + ", commentText=" + commentText
 				+ ", commentWriter=" + commentWriter + ", commentRdate=" + commentRdate + ", commentUdate="
 				+ commentUdate + "]";
 	}

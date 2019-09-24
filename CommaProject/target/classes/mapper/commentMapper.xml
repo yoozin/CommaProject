@@ -2,29 +2,35 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    <mapper namespace="mapper.commentMapper">
+    <mapper namespace="comment.mapper.CommentMapper">
     <!-- 댓글 전체 조회 -->
-    <select id="selectAll" parameterType="int" resultType="comment.vo.CommentVO">
-  		select * from comment where border_no = #{borderNo}
+    <select id="selectAll" resultType="comment" parameterType = "int">
+  		select * from comma.comment where board_id =#{boardId} order by comment_no desc
   	</select>
-  	<select id="selectOne" parameterType="int" resultType="comment.vo.CommentVO">
+  	<select id="selectOne" parameterType="int" resultType="comment">
   		select * from comment where comment_no = #{commentNo}
   	</select>
   	<select id="selectCount" parameterType="int" resultType="int">
-  		select count(*) from comment where border_no=#{borderNo}
+  		select count(*) from comment where board_id=#{boardId}
   	</select>
   	<select id="selectLastOne">
   		select * from comment order by comment_no desc limit 1
   	</select>
-  	<insert id="insertCmt" parameterType="comment.vo.CommentVO">
-  		insert into comment(comment_writer, comment_text, border_no)
-  		values (#{commentWriter},#{commentText},#{borderNo})
+  	<insert id="insertComment" parameterType="comment">
+  		insert into comma.comment(comment_writer, comment_text, board_id) values (#{commentWriter},#{commentText},#{boardId})
   	</insert>
-  	<update id="updateComment" parameterType="comment.vo.CommentVO">
+  	<update id="updateComment" parameterType="comment">
   		update comment set comment_writer=#{commentWriter}, comment_text=#{commentText} 
   		where comment_no=#{commentNo}
   	</update>
   	<delete id="deleteComment" parameterType="int">
   		delete from comment where comment_no=#{commentNo}
   	</delete>
+  	
+  	<!-- 코멘트 페이징 처리 -->
+  	
+ 
+  	
+  	
+  	
     </mapper>
