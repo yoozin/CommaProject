@@ -34,10 +34,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/getMemberList", method = RequestMethod.GET) 
 	public String getMemberList(Model model) throws Exception{ 
-		
-		
 		model.addAttribute("memberList", memberService.getMemberList());
-		
 		return "member/memberList"; 
 		
 	} 
@@ -62,8 +59,6 @@ public class MemberController {
 	
 	@RequestMapping("/signup")
 	public String registerMember()throws Exception{
-		
-		
 		return "/WEB-INF/views/login/signupForm.jsp";
 	}
 	
@@ -72,16 +67,11 @@ public class MemberController {
 	
 	@RequestMapping(value = "/insertMember", method= RequestMethod.POST) 
 	public String insertMember(MemberVo memberVO, Model model) throws Exception { 
-		System.out.println(memberVO);
 		model.addAttribute("memberVO" , memberVO);
 		memberService.insertMember(memberVO); 
 		//회원가입 인증메일 보내기 추가예정(메일샌더서비스 검색해서..)
-		
-		System.out.println(memberVO.getMemberId()+" , "+memberVO.getMemberName());
-		
-		
+
 		return "LoginWithSession"; 
-		
 	}
 	
 	
@@ -131,14 +121,12 @@ public class MemberController {
 	
 	@RequestMapping(value = "/LoginWithSession")
 	public String LoginWithSession(LoginDto loginDTO, HttpSession session) throws Exception{
-	
-		
-		
+
 		System.out.println("longinDto ::"+loginDTO);
 		MemberVo member = memberService.loginMember(loginDTO);
 		session.setAttribute("loginInfo",member);
 		System.out.println("로그인이 완료되었습니다.");
-		
+
 		return "redirect:/contact.jsp";
 		
 	}
@@ -162,12 +150,11 @@ public class MemberController {
 	
 	
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, Model model) {
+	public void logout(HttpServletRequest request, Model model) {
 		
 		request.getSession().removeAttribute("loginInfo");
 		model.addAttribute("","");
 		
-		return "/index.jsp";
       }
 	
 	 

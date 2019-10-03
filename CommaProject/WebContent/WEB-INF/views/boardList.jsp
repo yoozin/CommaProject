@@ -14,10 +14,99 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>board</title>
 <style>
-   body{
-      padding-top:70px;
-      padding-bottom:30px;
-   }
+body {
+  background: #eee;
+  padding: 0;
+  margin: 0;
+  margin-top: 140px;
+  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+.commaicon {
+ padding-top: 26px;
+}
+.container2 {
+  width: 80%;
+  margin: 0 auto;
+  clear: both;
+}
+
+
+nav {
+  background: #fff;
+  height: 80px;
+  line-height: 80px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9998;
+  transition: all 0.5s;
+}
+nav.scrollUp {
+  transform: translateY(-80px);
+}
+nav ul.navbar-menu {
+  margin: 0;
+  padding: 0;
+  margin-top: -48px;
+  display: inline-block;
+  float: right;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+nav ul.navbar-menu li {
+  display: inline-block;
+  margin: 0 10px;
+}
+nav ul.navbar-menu li a {
+  color: #666;
+  font-size: 14px;
+}
+nav a#brand {
+  text-transform: uppercase;
+  foat: left;
+  font-weight: 800;
+  font-size: 20px;
+}
+nav button {
+  background: none;
+  width: 30px;
+  height: 40px;
+  margin-top: 20px;
+  border: none;
+  float: right;
+  display: inline-block;
+  cursor: pointer;
+  display: none;
+}
+nav button span {
+  width: 30px;
+  height: 40px;
+  height: 2px;
+  background: #333;
+  display: block;
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+  nav ul.navbar-menu {
+    display: none;
+  }
+
+  nav button {
+    display: block;
+  }
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+   
 </style>
 <script>
 //이전버튼 이벤트
@@ -32,15 +121,19 @@ function fn_prev(page, range, rangeSize){
    form.action = url;
    form.submit();
 }
+
 //페이지 번호 클릭
-function fn_paginaiton(page,range,rangeSize,searchType,keyword){
-   var form = document.getElementById("boardForm");
+function fn_pagination(page, range, rangeSize, searchType, keyword) {
+    var form = document.getElementById("boardForm");
    var url = "<c:url value='/board/list'/>";
    url = url + "?page=" + page;
    url = url + "&range=" + range;
-   form.action = url;
-   form.submit();
+
+   location.href = url;   
 }
+
+
+
 //다음 버튼 이벤트
 function fn_next(page, range, rangeSize){
    var form = document.getElementById("boardForm");
@@ -106,8 +199,34 @@ function btnSearch(){
 <body>
 <article>
 <div class="container">
-<div class="table-responsive">
-<h2>board list</h2>
+		<nav>
+		<div class="container2">
+
+			<div class="commaicon">
+				<a href="index" id="brand"><img height="22px;"
+					src="${pageContext.request.contextPath}/resources/images/blackLogo.png" /></a>
+			</div>
+
+			<ul class="navbar-menu">
+				<li><a href="http://localhost:8080/CommaProject/index">Home</a></li>
+				<li><a href="http://localhost:8080/CommaProject/board/list">Stories</a></li>
+				<li><a href="#">Comma</a></li>
+				<c:choose>
+					<c:when test="${not empty sessionScope.loginInfo}">
+						<li>${sessionScope.loginInfo.memberId}님<a
+							href="http://localhost:8080/CommaProject/member/logout.do">Logout</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="http://localhost:8080/CommaProject/contact.jsp">Login</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+
+		</div>
+		</nav>
+
+		<div class="table-responsive">
+<h3>Explore Stories</h3>
 <br>
 
     <form id="boardForm" name="boardForm" method="post">
@@ -125,7 +244,7 @@ function btnSearch(){
             <thead>
                 <tr>
                    
-                    <th>boardId</th>
+                    <th>no.</th>
                     <th>title</th>
                     <th>writer</th>
                     <th>travelDate</th>
@@ -135,27 +254,25 @@ function btnSearch(){
                     <th>viewCount</th>
                 </tr>
             </thead>
-            <tbody>
+          <tbody>
             <c:choose>
             <c:when test="${empty list}">
                <tr><td colspan="8" align="center">데이터가 없습니다.</td></tr>
             </c:when>
             <c:when test="${!empty list }">
             
-                <c:forEach var="result" items="${list}" varStatus="status">
-                    <tr>
-                  
-                        <td><c:out value="${result.boardId }"/></td>
+                    <c:forEach var="result" items="${list}" varStatus="status">      
+                      <tr>
+                         <td>${result.boardId }</td>
                         <td><a href='#' onclick='fn_view(${result.boardId})'><c:out value="${result.title }"/></a></td>
                         <td><c:out value="${result.writer }"/></td>
-                        <td><c:out value="${result.travelDate }"/></td>
-                        <td><c:out value="${result.wDate }"/></td>
+                        <td><fmt:formatDate value="${result.travelDate }" dateStyle="full"/></td>
+                        <td><fmt:formatDate value="${result.wDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                         <td><c:out value="${result.uDate }"/></td>
                         <td><c:out value="${result.replyCount}"/></td>
                         <td><c:out value="${result.viewCount}"/></td>
                     </tr>
                 </c:forEach>
-                
                 </c:when>
                 </c:choose>
             </tbody>
@@ -215,4 +332,3 @@ function btnSearch(){
 </article>
 </body>
 </html>
-

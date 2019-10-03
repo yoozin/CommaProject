@@ -16,63 +16,6 @@ $(function() {
 	
 	
 	 
-	angular.module('ionic.example', ['ionic.service.platform', 'ionic.ui.content', 'ionic.ui.list'])
-
-    // A simple relative timestamp filter
-    .filter('relativets', function() {
-      return function(value) {
-        var now = new Date();
-        var diff = now - value;
-
-        // ms units
-        var second = 1000;
-        var minute = second * 60;
-        var hour = minute * 60;
-        var day = hour * 24;
-        var year =  day * 365;
-        var month = day * 30;
-
-        var unit = day;
-        var unitStr = 'd';
-        if(diff > year) {
-          unit = year;
-          unitStr = 'y';
-        } else if(diff > day) {
-          unit = day;
-          unitStr = 'd';
-        } else if(diff > hour) {
-          unit = hour;
-          unitStr = 'h';
-        } else if(diff > minute) {
-          unit = minute;
-          unitStr = 'm';
-        } else {
-          unit = second;
-          unitStr = 's';
-        }
-
-        var amt = Math.ceil(diff / unit);
-        return amt + '' + unitStr;
-      }
-    })
-
-    .controller('ProfileCtrl', function($scope) {
-      $scope.posts = [];
-
-      for(var i = 0; i < 7; i++) {
-        // Fake a date
-        var date = (+new Date) - (i * 1000 * 60 * 60);
-        $scope.posts.push({
-          created_at: date,
-          text: 'Doing a bit of ' + ((Math.floor(Math.random() * 2) === 1) ? 'that' : 'this')
-        });
-      }
-    });
-
-	
-	
-	
-	
 	
 	
 document.querySelector('.img__btn').addEventListener('click', function() {
@@ -151,8 +94,10 @@ $("#LoginCheck").click(function(){
        		                   
        		                
        		                } else{
-       		                 formObj.attr("action", "member/LoginWithSession");    ///board/delete/로
-       		                 formObj.submit(); 
+       		                	
+       		                	formObj.attr("action", "member/LoginWithSession");    ///board/delete/로
+       		                 
+       		                	formObj.submit(); 
        					     
 
 
@@ -173,7 +118,6 @@ $("#LoginCheck").click(function(){
 	
 });
 
-	
 	
 
 $(function() {
@@ -263,12 +207,14 @@ $(function() {
     	        return false;
     	    }
     	    
-    	    if(confirm("회원가입을 하시겠습니까?")){
+    	    if(confirm("회원가입을 하시겠습니까?") == true){
     	        alert("회원가입을 축하합니다");
     	        return true;
+    	    } else {
+    	    	return false;
     	    }
     	    
-    	    if(confirm("회원가입을 하시겠습니까?")){
+    	    if(confirm("회원가입을 하시겠습니까?") == true){
     	        if(idck==0){
     	            alert('아이디 중복체크를 해주세요');
     	            return false;
@@ -276,6 +222,8 @@ $(function() {
     	        alert("회원가입을 축하합니다");
     	        $("#frm").submit();
     	        }
+    	    } else{
+    	    	 return false;
     	    }
     	
 
@@ -293,9 +241,13 @@ $(function() {
 });
 
 
+
+
+
+
 function valdate(){
 	var re = /^[a-zA-Z0-9]{4,12}$/;
-	var id = document.getElementById("memberId");
+	var id = document.getElementById("ID");
 	var pwd = document.getElementById("password");
 	if(!check(re,id,"아이디는 4~12자의 영문 대, 소문자 및 숫자로 입력해주세요")){
 		return false;
@@ -313,20 +265,7 @@ function valdate(){
 		location.reload();
 	}
 	
-	function onSignIn(googleUser) {
-		 var id_token = googleUser.getAuthResponse().id_token;
-		  var profile = googleUser.getBasicProfile();
-		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-		  console.log('Name: ' + profile.getName());
-		  console.log('Image URL: ' + profile.getImageUrl());
-		  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		}
-	 function signOut() {
-		    var auth2 = gapi.auth2.getAuthInstance();
-		    auth2.signOut().then(function () {
-		      console.log('User signed out.');
-		    });
-		  }
+	
 }
 
 
@@ -838,14 +777,21 @@ input {
 <nav>
   <div class="container">
     
-    <a href="/CommaProjectTest/index.jsp" id="brand" ><img height = "22px;" src="${pageContext.request.contextPath}/resources/Img/blackLogo.png"/></a>
+    <a href="index" id="brand" ><img height = "22px;" src="${pageContext.request.contextPath}/resources/images/blackLogo.png"/></a>
    
     
     <ul class="navbar-menu">
-      <li><a href="/CommaProjectTest/index.jsp">Home</a></li>
+      <li><a href="index">Home</a></li>
       <li><a href="board/list">Stories</a></li>
-      <li><a href="#">Comma</a></li>
-      <li><a href="member/logout.do">Logout</a></li>
+      <li><a href="#">Comma</a></li> <!-- 희림 : 로그인했을경우 아이디 나오고, 로그아웃 / 로그인안한경우 로그인나오게 설정 -->
+      	<c:choose>
+      	<c:when test="${not empty sessionScope.loginInfo}">
+      	<li>${sessionScope.loginInfo.memberId}님 <a href="member/logout.do">Logout</a></li>
+   	   </c:when>
+     	 <c:otherwise>
+       <li><a href="contact.jsp">Login</a></li>
+      </c:otherwise>
+      </c:choose>
     </ul>
     
   </div>
@@ -862,7 +808,7 @@ input {
         
         이메일 : <c:out value="${sessionScope.loginInfo.memberEmail}"/> 
         <a href="member/logout.do">로그아웃</a>
-        <a href="boardWrite.jsp">글쓰러가기</a>  <a href="page2">페이지2</a>
+        <a href="board">글쓰러가기</a>  <a href="page2">페이지2</a>
     
     
     
@@ -870,26 +816,11 @@ input {
       <div id="profile-bg"></div>
       <div id="content">
         <div id="profile-info">
-          <img id="profile-image" src="${pageContext.request.contextPath}/resources/img/고양이1.jpg">
+          <img id="profile-image" src="${pageContext.request.contextPath}/resources/images/고양이1.jpg">
           <h3 id="profile-name">${sessionScope.loginInfo.memberName}</h3>
-          <span id="profile-description">${sessionScope.loginInfo.memberEmail} <a href="https://twitter.com/ionicframework">${sessionScope.loginInfo.memberPhone}	</a>, founder of
-            <a href="https://twitter.com/driftyco">@driftyco</a></span>
+          <span id="profile-description">${sessionScope.loginInfo.memberEmail} <a href="https://twitter.com/ionicframework">${sessionScope.loginInfo.memberPhone}</span>
         </div>
-        <ion-list>
-          <ion-item ng-repeat="post in posts">
-            <img class="post-profile-image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/me.png">
-            {{post.text}}
-            <div class="post-time">{{post.created_at | relativets }}</div>
-            <div class="post-options">
-              <i class="icon-reply"></i>
-              <i class="icon-shuffle"></i>
-            </div>
-          </ion-item>
-        </ion-list>
-      </div>
-    </ion-content>
-    
-    
+      
     
     
         </c:when>
@@ -901,17 +832,17 @@ input {
   <div class="form sign-in">
   <br><br><br><br><br>
     <h2>Welcome back,</h2>
-     <form role = "form" id = "frm1" name="form1" method="post">
+     <form method="post" role = "form"  id = "frm1" name="form1" >
     <label>
       <span>User ID</span>
-      <input type="text" id = "ID" name = "memberId2"/>
+      <input type="text" id = "ID" name = "memberId"/>
     </label>
     <label>
       <span>Password</span>
       <input type="password" name="password" id ="password" />
     </label>
     <p class="forgot-pass">Forgot password?</p>
-    <button type="button" class="submit" id="LoginCheck">Sign In</button>
+    <button type="button"  class="submit" id="LoginCheck">Sign In</button>
     <button type="button" class="fb-btn">Connect with <span>facebook</span></button>
     </form>
   </div>

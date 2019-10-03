@@ -7531,7 +7531,7 @@ section .post {
         <div class="cover-container">
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand"><img src="${pageContext.request.contextPath}/resources/Img/commaLogo.png" alt="Code" class="img-responsive logo"> </h3>
+              <h3 class="masthead-brand"><img src="${pageContext.request.contextPath}/resources/images/commaLogo.png" alt="Code" class="img-responsive logo"> </h3>
               <nav>
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="#" data-hide=".cover-wrapper">Home</a></li>
@@ -7547,7 +7547,7 @@ section .post {
 <!--           메인글
  -->            <h1 class="cover-heading">Comma Project</h1>
             <p class="lead">I&apos;m a freshmen at Oberlin College, and a freelance web developer in my spare time. I occasionally <a href="blog" data-hide=".cover-wrapper">write</a> about tech, work on various <a href="projects" data-hide=".cover-wrapper">projects</a>, draft demos on <a href="https://codepen.io/terf/">CodePen</a>, and spend a lot of time expirementing with web technologies.</p>
-            <p><a href="/CommaProject/contact.jsp" class="btn btn-lg btn-default" data-hide=".cover-wrapper"><c:choose><c:when test="${not empty loginInfo}">My Page</c:when><c:otherwise>Join with us</c:otherwise></c:choose></a></p>
+            <p><a href="/CommaProject/contact.jsp" class="btn btn-lg btn-default" data-hide=".cover-wrapper"><c:choose><c:when test="${not empty loginInfo}">My Page</c:when><c:otherwise>Start</c:otherwise></c:choose></a></p>
           </div>
 
           <div class="mastfoot">
@@ -7571,12 +7571,8 @@ section .post {
                     <li><a href="index" data-hide="#blog">Home</a></li>
                     <li class="active"><a href="#" data-hide="#blog">Blog</a></li>
                     <li><a href="projects" data-hide="#blog">Projects</a></li>
-                    
-                    
                     <li><a href="contact" data-hide="#blog">Login</a></li>
-                    
-                    
-                    
+
                   </ul>
                 </nav>
               </div>

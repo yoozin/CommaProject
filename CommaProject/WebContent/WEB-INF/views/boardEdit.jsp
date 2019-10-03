@@ -28,21 +28,21 @@
 <title>수정하기</title>
 <script>
 $(document).ready(function() {
-	  $('#summernote').summernote({
+     $('#summernote').summernote({
 
- 	    	placeholder: 'content',
+           placeholder: 'content',
 
-	        minHeight: 370,
+           minHeight: 370,
 
-	        maxHeight: null,
+           maxHeight: null,
 
-	        focus: true, 
+           focus: true, 
 
-	        lang : 'ko-KR'
+           lang : 'ko-KR'
 
-	  });
+     });
 
-	});
+   });
 
 </script>
 
@@ -53,21 +53,17 @@ $(document).ready(function() {
 <body>
 
 <h2 style="text-align: center;">Edit your story</h2><br><br><br>
-
-
-
 <div style="width: 60%; margin: auto;">
-
-	<form id="boardForm" method="post">
-		<input type="text" name="writer" style="width: 20%;" value="${board.writer}"/><br>
-		<input type="text" name="title" style="width: 40%;" value="${board.title}"/>
-		<input type="date" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>" ><br>
-		<br><br> 
-		최초작성일 : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/><br>
-		<textarea id="summernote" name="content"> ${board.content}</textarea>
-		<input id="subBtn" type="button" value="submit" style="float: right;" onclick="goModify()"/>
-
-	</form>
+	${board.boardId}
+   <form id="boardForm" method="post">
+      <input type="text" name="writer" style="width: 20%;" value="${board.writer}"/><br>
+      <input type="text" name="title" style="width: 40%;" value="${board.title}"/>
+      <input type="date" name="travelDate" value="<fmt:formatDate value="${board.travelDate}" pattern="yyyy-MM-dd"/>" ><br>
+      <br><br> 
+      최초작성일 : <fmt:formatDate value="${board.wDate}" pattern="yyyy-MM-dd HH:mm:ss"/><br>
+      <textarea id="summernote" name="content"> ${board.content}</textarea>
+      <input id="subBtn" type="button" value="submit" style="float: right;" onclick="goModify()"/>
+   </form>
 </div>
 </body>
 <script>
@@ -79,33 +75,33 @@ function goModify(){
     url = url + "?boardId=" + ${board.boardId};
     
     form.action = url;    
-   	
-	var title = "${board.title}";
-	var writer = "${board.writer}";
-	var content = "${board.content}";
-	var travelDate = "${board.travelDate}"
-	
-	if (title.trim() == ''){
-		alert("제목을 입력해주세요");
-		return false;
-	}
+      
+   var title = "${board.title}";
+   var writer = "${board.writer}";
+   var content = '${board.content}';
+   var travelDate = "${board.travelDate}"
+   
+   if (title.trim() == ''){
+      alert("제목을 입력해주세요");
+      return false;
+   }
 
-	if (writer.trim() == ''){
-		alert("작성자를 입력해주세요");
-		return false;
-	}
+   if (writer.trim() == ''){
+      alert("작성자를 입력해주세요");
+      return false;
+   }
 
-	if (content.trim() == ''){
-		alert("내용을 입력해주세요");
-		return false;
-	}
+   if (content.trim() == ''){
+      alert("내용을 입력해주세요");
+      return false;
+   }
 
-	if (travelDate.trim() == ''){
-		alert("날짜 입력해주세요");
-		return false;
-	}
+   if (travelDate.trim() == ''){
+      alert("날짜 입력해주세요");
+      return false;
+   }
 
-	form.submit();
+   form.submit();
 }
 
 </script>

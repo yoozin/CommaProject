@@ -20,6 +20,7 @@
    		AND writer like CONCAT('%',#{keyword},'%')
    	</if>
    </trim>
+   order by wdate desc
    <!-- 페이징 -->
    	LIMIT #{startList}, #{listSize}
    <!-- 페이징 -->

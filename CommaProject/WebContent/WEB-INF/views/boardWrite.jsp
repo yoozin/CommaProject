@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
  
 <!DOCTYPE html>
 <html>
@@ -39,7 +44,7 @@ $(document).ready(function() {
 
 <div style="width: 60%; margin: auto;">
 	<form method="post" action="board/write">
-		<input type="text" name="writer" style="width: 20%;" placeholder="writer"/><br>
+		<input type="text" name="writer" style="width: 20%;" value="${sessionScope.loginInfo.memberName}" readonly="readonly"/><br>
 		<input type="text" name="title" style="width: 40%;" placeholder="title"/>
 		<input type="date" name="travelDate"><br>
 		<br><br> 

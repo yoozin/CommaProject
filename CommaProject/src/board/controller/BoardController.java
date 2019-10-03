@@ -38,7 +38,7 @@ public class BoardController {
 	private CommentService commentService;
 
 	
-	@GetMapping("board/index")
+	@GetMapping("index")
 	public String index(Model model) {
 	    
 	    return "/index.jsp";
@@ -56,12 +56,15 @@ public class BoardController {
 	
 	
 	@RequestMapping("board/write")
-	public String write(BoardVO board, Model model ) throws Exception {
+	public String write(BoardVO board, Model model, HttpSession session ) throws Exception {
 		board.setReplyCount(0);
 		
-		BaseToImgDecoder baseDecoder = new BaseToImgDecoder();
-		board.setContent(baseDecoder.decoder(board.getContent()));
+		session.getAttribute("loginInfo");
 		
+		BaseToImgDecoder baseDecoder = new BaseToImgDecoder(); //base64에서 이미지 부분(매우긴 문자열)을 로컬 경로(짧게)로 변환하여 컨텐트에 넣음.
+		
+		board.setContent(baseDecoder.decoder(board.getContent()));
+	
 		BoardVO createboard = boardService.createBoard(board);
 		model.addAttribute("board", createboard);
 		return "/WEB-INF/views/boardResult.jsp";
@@ -69,7 +72,7 @@ public class BoardController {
 	
 	
 	@RequestMapping("board/viewOne")
-	public String boardViewOne(Model model , BoardVO board, HttpSession session) {
+	public String boardViewOne(Model model , BoardVO board, HttpSession session) throws Exception {
 		session.getAttribute("loginInfo");
 		MemberVo member= (MemberVo) session.getAttribute("loginInfo");
 		System.out.println("viewOne");
@@ -77,7 +80,8 @@ public class BoardController {
 		
 		//수정해야함 리플라이카운트
 		board.setReplyCount(0);
-		BoardVO boardOne = boardService.selectOneBoard(board.getBoardId());
+							
+		BoardVO boardOne = boardService.read(board.getBoardId());
 		model.addAttribute("board", boardOne);
 	
 		
@@ -90,7 +94,7 @@ public class BoardController {
 	
 	@RequestMapping("board/modify")
 	public String boardEditPre(Model model, int boardId) throws Exception {
-		BoardVO boardOne = boardService.read(boardId);
+		BoardVO boardOne = boardService.selectOneBoard(boardId);
 		model.addAttribute("board", boardOne);
 		return "/WEB-INF/views/boardEdit.jsp";	
 	}
@@ -102,7 +106,7 @@ public class BoardController {
 		String updatedTime = date.format(time);
 		board.setuDate(updatedTime);
 		BoardVO updatedBoard = boardService.updateBoard(board);	
-		System.out.println(board);
+		System.out.println("여기나오나");
 		return "forward:/board/viewOne";
 	}
 	
