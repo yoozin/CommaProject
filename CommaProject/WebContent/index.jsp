@@ -7546,7 +7546,7 @@ section .post {
           <div class="inner cover">
 <!--           메인글
  -->            <h1 class="cover-heading">Comma Project</h1>
-            <p class="lead">I&apos;m a freshmen at Oberlin College, and a freelance web developer in my spare time. I occasionally <a href="blog" data-hide=".cover-wrapper">write</a> about tech, work on various <a href="projects" data-hide=".cover-wrapper">projects</a>, draft demos on <a href="https://codepen.io/terf/">CodePen</a>, and spend a lot of time expirementing with web technologies.</p>
+            <p class="lead">heelim developed thisssss test test test</p>
             <p><a href="/CommaProject/contact.jsp" class="btn btn-lg btn-default" data-hide=".cover-wrapper"><c:choose><c:when test="${not empty loginInfo}">My Page</c:when><c:otherwise>Start</c:otherwise></c:choose></a></p>
           </div>
 
