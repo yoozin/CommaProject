@@ -23,13 +23,7 @@
 			var re = false;
 			var num = 1;
 			var formObj = $("form[role='form']"); 
-			
-			
-			if (valdate() == false){
 				
-				return re;
-			}
-			
 			
 			$.ajax({
 				 async: true,

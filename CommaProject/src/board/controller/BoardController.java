@@ -40,17 +40,20 @@ public class BoardController {
 	
 	@GetMapping("index")
 	public String index(Model model) {
-	    
-	    return "/index.jsp";
+		
+	    return "/WEB-INF/views/index.jsp";
+	}
+
+	@GetMapping("contact")
+	public String contact(Model model) {
+	    return "/WEB-INF/views/contact.jsp";
 	}
 
 	
-	
 	@RequestMapping("board")
 	public String board(Model model) {
-	    //로그인 체크 
-		
-	    return "//WEB-INF/views/boardWrite.jsp";
+	    //login check
+	    return "/WEB-INF/views/boardWrite.jsp";
 	}
 	
 	
@@ -60,10 +63,13 @@ public class BoardController {
 		board.setReplyCount(0);
 		
 		session.getAttribute("loginInfo");
+		System.out.println("여기까지오니");
 		
-		BaseToImgDecoder baseDecoder = new BaseToImgDecoder(); //base64에서 이미지 부분(매우긴 문자열)을 로컬 경로(짧게)로 변환하여 컨텐트에 넣음.
-		
-		board.setContent(baseDecoder.decoder(board.getContent()));
+		/*
+		 * BaseToImgDecoder baseDecoder = new BaseToImgDecoder(); //base64에서 이미지 부분(매우긴
+		 * 문자열)을 로컬 경로(짧게)로 변환하여 컨텐트에 넣음.
+		 * board.setContent(baseDecoder.decoder(board.getContent()));
+		 */
 	
 		BoardVO createboard = boardService.createBoard(board);
 		model.addAttribute("board", createboard);
@@ -106,7 +112,6 @@ public class BoardController {
 		String updatedTime = date.format(time);
 		board.setuDate(updatedTime);
 		BoardVO updatedBoard = boardService.updateBoard(board);	
-		System.out.println("여기나오나");
 		return "forward:/board/viewOne";
 	}
 	

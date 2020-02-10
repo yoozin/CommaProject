@@ -111,15 +111,13 @@ nav button span {
 <script>
 //이전버튼 이벤트
 function fn_prev(page, range, rangeSize){
-   var form = document.getElementById("boardForm");
    var page = ((range-2)*rangeSize)+1;
    var range = range-1;
-   
    var url = "<c:url value='/board/list'/>";
    url = url + "?page=" + page;
    url = url + "&range=" + range;
-   form.action = url;
-   form.submit();
+   
+   location.href= url;
 }
 
 //페이지 번호 클릭
@@ -136,19 +134,20 @@ function fn_pagination(page, range, rangeSize, searchType, keyword) {
 
 //다음 버튼 이벤트
 function fn_next(page, range, rangeSize){
-   var form = document.getElementById("boardForm");
    var page = parseInt((range*rangeSize))+1;
    var range = parseInt(range)+1;
-   
    var url = "<c:url value='/board/list'/>";
    url = url + "?page=" + page;
    url = url + "&range=" + range;
-   form.action = url;
-   form.submit();
+   location.href = url;  
 }
 
 function list_bt(){
    location.href = "<c:url value='/board/list'/>";
+}
+
+function goLogin(){
+	location.href = "<c:url value='/contact'/>";
 }
 
 function comment_create(boardId){
@@ -162,12 +161,8 @@ function comment_create(boardId){
 //글쓰기
 
 function fn_write(){
-    
-    var form = document.getElementById("boardForm");
-    
-    form.action = "<c:url value='/board'/>";
-    form.submit();
-    
+	     var url = "<c:url value='/board'/>"; 
+	     location.href= url;
 }
  
 //글조회
@@ -203,7 +198,7 @@ function btnSearch(){
 		<div class="container2">
 
 			<div class="commaicon">
-				<a href="index" id="brand"><img height="22px;"
+				<a href="http://localhost:8080/CommaProject/index" id="brand"><img height="22px;"
 					src="${pageContext.request.contextPath}/resources/images/blackLogo.png" /></a>
 			</div>
 
@@ -214,10 +209,10 @@ function btnSearch(){
 				<c:choose>
 					<c:when test="${not empty sessionScope.loginInfo}">
 						<li>${sessionScope.loginInfo.memberId}님<a
-							href="http://localhost:8080/CommaProject/member/logout.do">Logout</a></li>
+							href="member/logout">Logout</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="http://localhost:8080/CommaProject/contact.jsp">Login</a></li>
+						<li><a href="http://localhost:8080/CommaProject/contact">Login</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -250,7 +245,6 @@ function btnSearch(){
                     <th>travelDate</th>
                     <th>writeDate</th>
                     <th>updateDate</th>
-                    <th>replyCount</th>
                     <th>viewCount</th>
                 </tr>
             </thead>
@@ -269,7 +263,6 @@ function btnSearch(){
                         <td><fmt:formatDate value="${result.travelDate }" dateStyle="full"/></td>
                         <td><fmt:formatDate value="${result.wDate }" pattern="yyyy-MM-dd hh:mm:ss"/></td>
                         <td><c:out value="${result.uDate }"/></td>
-                        <td><c:out value="${result.replyCount}"/></td>
                         <td><c:out value="${result.viewCount}"/></td>
                     </tr>
                 </c:forEach>
@@ -278,7 +271,17 @@ function btnSearch(){
             </tbody>
         </table>
         <div>
-      <button type="button" class="btn btn-sm btn-primary" id="fn_write()" onclick="fn_write()">글쓰기</button><br>
+  
+  	<c:choose>
+	<c:when test="${not empty sessionScope.loginInfo}">
+     	 <button type="button" class="btn btn-sm btn-primary" onclick="fn_write()">write</button><br>
+	</c:when>
+	<c:when test="${empty sessionScope.loginInfo}">
+		<button type="button" class="btn btn-sm btn-primary" onclick="goLogin()">Login and Write</button><br>
+	</c:when>
+	</c:choose>
+  		
+    
       </div>
     <br>
     

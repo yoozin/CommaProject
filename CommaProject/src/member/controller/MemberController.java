@@ -80,14 +80,9 @@ public class MemberController {
 	@ResponseBody
 	public Map<Object, Object> loginId(@RequestBody String memberId) { 
 		Map<Object, Object> map = new HashMap<Object, Object>();
-		
 		System.out.println(memberId);
-		
 		///test
-		
 		int countId;
-		
-		
 		countId = memberService.idcheck(memberId);
 	    map.put("cnt", countId);
 	    return map;
@@ -127,7 +122,7 @@ public class MemberController {
 		session.setAttribute("loginInfo",member);
 		System.out.println("로그인이 완료되었습니다.");
 
-		return "redirect:/contact.jsp";
+		return "redirect:/contact";
 		
 	}
 
@@ -142,19 +137,14 @@ public class MemberController {
       }
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public void logout(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/logout.do")
+	public String logout(HttpServletRequest request, Model model) {
 		
+		System.out.println("로그아웃");
 		request.getSession().removeAttribute("loginInfo");
 		model.addAttribute("","");
 		
+		return "redirect:/contact";
       }
 	
 	 

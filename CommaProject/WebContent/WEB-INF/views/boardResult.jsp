@@ -365,10 +365,18 @@ body{
       </div>
     
     <ul class="navbar-menu">
-      <li><a href="/CommaProject/index.jsp">Home</a></li>
-      <li><a href="board/list">Stories</a></li>
+      <li><a href="/CommaProject/index">Home</a></li>
+      <li><a href="/CommaProject/board/list">Stories</a></li>
       <li><a href="#">Comma</a></li>
-      <li><a href="member/logout.do">Logout</a></li>
+      <c:choose>
+					<c:when test="${not empty sessionScope.loginInfo}">
+						<li>${sessionScope.loginInfo.memberId}님<a
+							href="member/logout">Logout</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="http://localhost:8080/CommaProject/contact">Login</a></li>
+					</c:otherwise>
+	  </c:choose>
     </ul>
     
   </div>
@@ -380,7 +388,7 @@ body{
   
   <p><strong>${board.writer}&ensp;
    |&ensp;<fmt:formatDate value="${board.wDate}" pattern="yyyy. MM. dd. HH:mm"/>&ensp;
-   |&ensp;Travel Date_ <fmt:formatDate value="${board.travelDate}" pattern="yyyy. MM. dd. E요일 "/>&ensp;
+   |&ensp;Travel Date_ <fmt:formatDate value="${board.travelDate}" pattern="yyyy. MM. dd."/>&ensp;
    |&ensp;View_ ${board.viewCount }
    <br>
    ${board.content}
@@ -394,8 +402,12 @@ body{
 <br><br><br><br><br><br>
 
 <p class="button">
-<button class= "btn btn-primary" id="modify_btn">modify</button>
-<button class= "btn btn-primary" id="delete_btn">delete</button>
+<c:choose>
+      	<c:when test="${sessionScope.loginInfo.memberName == board.writer}">
+      <button class= "btn btn-primary" id="modify_btn">modify</button>
+	  <button class= "btn btn-primary" id="delete_btn">delete</button>
+   	   </c:when>
+</c:choose>
 <button class= "btn btn-primary" id="list_btn">list</button>
 </p>
 </div>

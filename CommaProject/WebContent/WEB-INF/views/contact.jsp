@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     
@@ -13,11 +13,7 @@
 
 <script>
 $(function() {
-	
-	
-	 
-	
-	
+
 document.querySelector('.img__btn').addEventListener('click', function() {
 	  document.querySelector('.cont').classList.toggle('s--signup');
 	});
@@ -55,7 +51,6 @@ $("#LoginCheck").click(function(){
 	
 	
 	if (valdate() == false){
-		
 		return re;
 	}
 	
@@ -70,8 +65,7 @@ $("#LoginCheck").click(function(){
             success : function(data) {
             	console.log(data);
                 if (data.cnt == 0) {
-					alert("아이디가 존재하지 않습니다.");
-                    
+					alert("아이디가 존재하지 않습니다.");  
                     $("#ID").focus();
                     num = 0;
                     return false;
@@ -86,25 +80,18 @@ $("#LoginCheck").click(function(){
        		            contentType: "application/json; charset=UTF-8",
        		            success : function(data) {
        		            	console.log(data);
-       		                if (data.cnt == 0) {
-       		                    
+       		                if (data.cnt == 0) {         
        		                    alert("비밀번호가 틀렸습니다.");
        		                    $("#password").focus();
-       		                    return false;
-       		                   
+       		                    return false;            
        		                
        		                } else{
        		                	
-       		                	formObj.attr("action", "member/LoginWithSession");    ///board/delete/로
-       		                 
+       		                	formObj.attr("action", "member/LoginWithSession");    ///board/delete/로                 
        		                	formObj.submit(); 
-       					     
-
-
+   
        		                }
-       		            }
-       		           
-       		            
+       		            } 
        			});
                 }
             }
@@ -118,16 +105,13 @@ $("#LoginCheck").click(function(){
 	
 });
 
-	
+var idck = 0;
 
 $(function() {
     //idck 버튼을 클릭했을 때 
-    var idck = 0;
-    $("#idck").click(function() {
-       
+    $("#idck").click(function() { 
         //userid 를 param.
-        var memberId =  $("#memberId").val(); 
-        
+        var memberId =  $("#memberId").val();         
         $.ajax({
             async: true,
             type : 'POST',
@@ -135,31 +119,31 @@ $(function() {
             url : "member/idcheck.do",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
-            success : function(data) {
-                if (data.cnt > 0) {
-                    
-                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
-                    
+            success : function(data) {     
+            	if (valdate() == false){   		
+            		idck = 0;
+            		$("#memberId").focus();     		 
+            	}  	
+            	else if (data.cnt > 0) {
+                    alert("already exist, please try other one");
+                    idck = 0;
                     $("#memberId").focus();
-                    
-                
                 } else {
-                    alert("사용가능한 아이디입니다.");
-                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
-                    
+                    alert("you can use this ID");     
                     $("#memberPassword").focus();
                     //아이디가 중복하지 않으면  idck = 1 
-                    idck = 1;
-                    
+                    idck = 1;      
                 }
             },
-            error : function(error) {
-                
+            error : function(error) {      
                 alert("error : " + error);
             }
         });
     });
+    
+    
+    
+    
     
     $('#DosignUp').click(function(){
     	
@@ -170,56 +154,66 @@ $(function() {
     	    var email = $("#memberEmail").val();
     	    var phone = $("#memberPhone").val();
     	 
+    	    if( idck == 0){
+    	    	alert("please check your ID"); 
+    	    	$("#memberId").focus();
+    	    	return false;
+    	    }
     	    
     	    if(userid.length == 0){
-    	        alert("아이디를 입력해 주세요"); 
+    	        alert("please make your ID"); 
     	        $("#memberId").focus();
     	        return false;
     	    }
     	    
     	    if(userpwd.length == 0){
-    	        alert("비밀번호를 입력해 주세요"); 
+    	        alert("please enter your password"); 
     	        $("#memberPassword").focus();
     	        return false;
     	    }
     	 
+    	     if (confirmPwd() == false){   		
+        		$("#memberPassword").focus();    
+        		return false;
+        	}   	
+    	    
     	    if(userpwd != inputPwdCfm){
-    	        alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); 
+    	        alert("please check your password again"); 
     	        $("#re_pwd").focus();
     	        return false; 
     	    }
     	 
     	    if(username.length == 0){
-    	        alert("이름을 입력해주세요");
+    	        alert("what's your name?");
     	        $("#memberName").focus();
     	        return false;
     	    }
     	    
     	    if(email.length == 0){
-    	        alert("이메일을 입력해주세요");
+    	        alert("what's your email address?");
     	        $("#memberEmail").focus();
     	        return false;
     	    }
     	    
     	    if(phone.length == 0){
-    	        alert("전화번호를 입력해주세요.");
+    	        alert("what's your mobile?");
     	        $("#memberPhone").focus();
     	        return false;
     	    }
     	    
-    	    if(confirm("회원가입을 하시겠습니까?") == true){
-    	        alert("회원가입을 축하합니다");
+    	    if(confirm("Are you sure?") == true){
+    	        alert("welcome");
     	        return true;
     	    } else {
     	    	return false;
     	    }
     	    
-    	    if(confirm("회원가입을 하시겠습니까?") == true){
+    	    if(confirm("Are you sure?") == true){
     	        if(idck==0){
-    	            alert('아이디 중복체크를 해주세요');
+    	            alert('please check your ID');
     	            return false;
     	        }else{
-    	        alert("회원가입을 축하합니다");
+    	        alert("congrats and welcome here!");
     	        $("#frm").submit();
     	        }
     	    } else{
@@ -241,32 +235,43 @@ $(function() {
 });
 
 
-
-
-
-
 function valdate(){
 	var re = /^[a-zA-Z0-9]{4,12}$/;
-	var id = document.getElementById("ID");
-	var pwd = document.getElementById("password");
-	if(!check(re,id,"아이디는 4~12자의 영문 대, 소문자 및 숫자로 입력해주세요")){
+	var id = document.getElementById("memberId");
+	if(!checkId(re,id,"아이디는 4~12자의 영문 대, 소문자 및 숫자로 입력해주세요")){
 		return false;
 	}
-	if(!check(re,pwd,"비밀번호는 4~12자의 영문 대,소문자 및 숫자로 입력해주세요")){
-		return false;
-	}
-	function check(re,what,msg){
-		if(re.test(what.value)){
+	function checkId(re,id,msg){
+		if(re.test(id.value)){
 			return true;
 		}
 		alert(msg);
-		what.value="";
-		what.focus();
-		location.reload();
+		id.value="";
+		id.focus();	
+		/* location.reload();  */		
 	}
-	
+}
+
+function confirmPwd(){
+	var re = /^[a-zA-Z0-9]{4,12}$/;
+	var pwd = document.getElementById("memberPassword");
+	if(!checkPwd(re,pwd,"비밀번호는 4~12자의 영문 대,소문자 및 숫자로 입력해주세요")){
+		return false;
+	}
+	function checkPwd(re,pwd,msg){
+		if(re.test(pwd.value)){
+			return true;
+		}
+		alert(msg);
+		pwd.value="";
+		pwd.focus();
+		/* location.reload();  */
+	}	
 	
 }
+
+
+
 
 
 </script>
@@ -789,7 +794,7 @@ input {
       	<li>${sessionScope.loginInfo.memberId}님 <a href="member/logout.do">Logout</a></li>
    	   </c:when>
      	 <c:otherwise>
-       <li><a href="contact.jsp">Login</a></li>
+       <li><a href="http://localhost:8080/CommaProject/contact">Login</a></li>
       </c:otherwise>
       </c:choose>
     </ul>
@@ -797,21 +802,10 @@ input {
   </div>
 </nav>
 
-
-
-<% System.out.println("TTTTESTESTEST : "+session.getAttribute("loginInfo")); %>
 <c:choose>
-	
     <c:when test="${not empty loginInfo}">
-   		  <h2>로그인 성공 </h2>
-        이름 : ${sessionScope.loginInfo.memberName}
-        
-        이메일 : <c:out value="${sessionScope.loginInfo.memberEmail}"/> 
-        <a href="member/logout.do">로그아웃</a>
-        <a href="board">글쓰러가기</a>  <a href="page2">페이지2</a>
-    
-    
-    
+   		  <h2> Welcome ${sessionScope.loginInfo.memberId}!  </h2>
+   		  <h3 align="center"><a href="http://localhost:8080/CommaProject/board/list">click here and write</a></h3>
  <ion-content has-header="true">
       <div id="profile-bg"></div>
       <div id="content">
@@ -819,15 +813,12 @@ input {
           <img id="profile-image" src="${pageContext.request.contextPath}/resources/images/고양이1.jpg">
           <h3 id="profile-name">${sessionScope.loginInfo.memberName}</h3>
           <span id="profile-description">${sessionScope.loginInfo.memberEmail} <a href="https://twitter.com/ionicframework">${sessionScope.loginInfo.memberPhone}</span>
-        </div>
       
-    
-    
-        </c:when>
-    
+        </div>
+
+        </c:when> 
         <c:otherwise>
     
-<p class="tip">Click on button in image container</p>
 <div class="cont">
   <div class="form sign-in">
   <br><br><br><br><br>
@@ -862,8 +853,6 @@ input {
       </div>
     </div>
     
-    
-    
     <div class="form sign-up">
           	<div method="post">
       <h2>Time to feel like home,</h2>
@@ -874,7 +863,7 @@ input {
       </label>
       <label>
       
-        <span>User ID </span><a class="myButton" id ="idck">중복체크</a>
+        <span>User ID </span><a class="myButton" id ="idck">check</a>
         <input type="text" name="memberId" id="memberId"/>
       </label>
       
